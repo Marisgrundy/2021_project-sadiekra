@@ -6,18 +6,23 @@ subtitle: GEO 511
 
 # Introduction
 
-Tom Petty is one of the greatest rock and roll artists of the 20th century. He tragically died in 2017 right after he finished up his final tour. Because he is my favorite artist, I have decided to honor him by creating a data visualization of his work through R packages.
+Tom Petty is one of the greatest rock and roll artists of the 20th century. He tragically died in 2017 right after he finished up his final tour. Because he is my favorite artist, I have decided to honor him by creating a data visualization of his work through R packages. Music and the information that comes with it is more accessible now than it ever has been. The medium for listening has changed over time from live to recorded, record to tape, and cd to iPod. Streaming services have now taken the lead allowing users to pay a consistent amount of money for access to as much or as little music as they'd like at any time. Spotify has emerged as the leading streaming service with 172 million premium users as of mid 2021. Although we have moved away from hard copies, streaming allows artist data to be available and analyzed. Tom Petty and the Heartbreakers may not tour anymore, but their music can continue to present itself through listening, and now visualization.
 
-Problems to be addressed:
-* How many studio albums did he release and when?
+Questions to be addressed:
+* How many studio albums did they release and when?
 * What is the danceability of his songs?
-* How positive are his songs?
-* What are the top 10 hits of his career?
+* How positive are their songs?
+* What are the top 10 hits of their career?
+* What are the most used lyrics?
 * Where has the band toured?
 * What are the top 5 places they have toured?
 
-# Materials and methods
+# Materials and Methods
+Using the Spotify API, I will be accessing the spotify database to get information about the band. Because Tom Petty produced music both with the band, and as a solo artist, it's important to note that this is not a comprehensive analysis of his music. This is only a look into the music produced as a band. The artist that is being referred to within the database is "Tom Petty and the Heartbreakers." Solo work can be found using the artist name "Tom Petty." All needed artist data will be accessed through this API including the following variables and information: artist name, album name, release date, danceability, valence (positivity), and lyrics.
 
+The Spotifyr package allows you to access and analyze variables included in the API with specific functions. I will be using this package, along with the igraph and ggraph packages to answer the questions listed in the introduction. The graph packages allow users to create graphs from data frames and visualize it in many forms. The graphs that will specifically be shown are dendrograms because they can display a hierarchy of information. The hierarchy will be helpful in showing most often used lyrics per album. I will also be using ggplot2 to show the danceability and positivity of the band's music.
+
+The spatial component of this analysis will include mapping out the tour locations of the band over the span of their career. This will be used using a crowd sourced list of tour locations and dates found at [The Petty Archives] (https://www.thepettyarchives.com/archives/miscellany/performances/setlists). Using the leaflet package, I will be creating a map of everywhere he's been, along with a table of dates and how frequent each places was visited. Before creating the maps though, I will be geocoding the areas with the tidygeocoder package and "geocode" function.
 
 Loading the Spotify API
 
@@ -39,13 +44,15 @@ library(ggplot2)
 library(dplyr)
 library(knitr)
 library(purrr)
-library (ggmap)
+library (tidygeocoder)
 library(leaflet)
 library(kableExtra)
+library(igraph)
+library(ggraph)
 knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 ```
 
-## Download and clean all required data
+## Data Download and Preparation
 ```{r}
 #load touring data
 touring_data <-read.csv('data/locations.csv')
@@ -66,13 +73,24 @@ petty_albums <- get_artist_albums(
   authorization = get_spotify_access_token(),
   include_meta_info = FALSE
 )
+view(petty_albums)
 ```
 
 ```{r, results='asis'}
 
 ```
+#Band Specifics
+```{r}
 
-Add any additional processing steps here.
+```
+
+#Where Did They Tour?
+
+```{r}
+#geocode locations
+touring_geocode <- touring_data %>%
+  geocode(City, method = 'osm', lat = latitude , long = longitude)
+```
 
 # Results
 
@@ -92,7 +110,11 @@ Clear summary adequately describing the results and putting them in context. Dis
 
 # References
 
-https://www.thepettyarchives.com/archives/miscellany/performances/setlists
-https://www.rdocumentation.org/packages/spotifyr/versions/2.2.1 
-https://github.com/thomasp85/ggraph
+* https://www.thepettyarchives.com/archives/miscellany/performances/setlists
+* https://www.rdocumentation.org/packages/spotifyr/versions/2.2.1 
+* https://github.com/thomasp85/ggraph
+* https://www.statista.com/statistics/244995/number-of-paying-spotify-subscribers/
+* https://www.r-graph-gallery.com/335-custom-ggraph-dendrogram.html
+* https://github.com/charlie86/spotifyr
+
 

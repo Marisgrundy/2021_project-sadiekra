@@ -12,9 +12,11 @@ library(ggplot2)
 library(dplyr)
 library(knitr)
 library(purrr)
-library (ggmap)
+library (tidygeocoder)
 library(leaflet)
 library(kableExtra)
+library(igraph)
+library(ggraph)
 
 #load touring data
 touring_data <-read.csv('data/locations.csv')
@@ -36,6 +38,9 @@ petty_albums <- get_artist_albums(
   include_meta_info = FALSE
 )
 View(petty_albums)
-#Make table of albums
-petty_albums%>%
-  kable()
+
+#geocode locations
+touring_geocode <- touring_data %>%
+  geocode(City, method = 'osm', lat = latitude , long = longitude)
+
+
