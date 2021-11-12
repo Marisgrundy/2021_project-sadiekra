@@ -18,30 +18,9 @@ Problems to be addressed:
 
 # Materials and methods
 
-[~ 200 words]
-
-Narrative: Clear narrative description of the data sources and methods. Includes data from at least two sources that were integrated / merged in R.
-
-Code: The code associated with the project is well organized and easy to follow. Demonstrates mastery of R graphics and functions.
-
-Data: The underlying data are publicly accessible via the web and downloaded/accessed within the Rmd script. If you want to use your own data, you must make it available on a website (e.g. Figshare) so that others are able to re-run your code.
-
-You can do bullets like this:
-
-* The first most important thing
-* The second most important thing
-* The third most important thing
-
-You can do numbers like this:
-
-1. The first most important thing
-2. The second most important thing
-3. The third most important thing
-
-See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
-
 
 Loading the Spotify API
+
 ```{r}
 #Load Spotify package and get access
 library(spotifyr)
@@ -68,22 +47,29 @@ knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 
 ## Download and clean all required data
 ```{r}
-n=20
-data=data.frame(x=runif(n,-180,180),
-                y=runif(n,-60,60),
-                size = runif(n, 5, 20),
-                category = factor(
-                  sample(letters[1:5], n, replace = TRUE)
-                  ),
-                value = rnorm(n))
+#load touring data
+touring_data <-read.csv('data/locations.csv')
+view(touring_data)
+
+#load spotify music data
+#Find artist id to access artist information
+tom_petty <- get_artist_audio_features("Tom Petty and the Heartbreakers")
+View(tom_petty)
+
+#Load album dataset
+petty_albums <- get_artist_albums(
+  id= "4tX2TplrkIP4v05BNC903e",
+  include_groups = c("album", "single", "appears_on", "compilation"),
+  market = NULL,
+  limit = 20,
+  offset = 0,
+  authorization = get_spotify_access_token(),
+  include_meta_info = FALSE
+)
 ```
 
 ```{r, results='asis'}
-data %>% 
-  slice(1:10) %>% #show only 1:n rows
-  kable(digits=2,align="c")%>% #make table and round to two digits
-  kable_styling(bootstrap_options = 
-                  c("striped", "hover", "condensed", "responsive")) #apply other formatting
+
 ```
 
 Add any additional processing steps here.
@@ -96,20 +82,7 @@ Tables and figures (maps and other graphics) are carefully planned to convey the
 
 Show tables, plots, etc. and describe them.
 
-```{r, fig.width=6, fig.height=3, fig.cap="Map of completely random data"}
-m <- leaflet(data) %>% 
-  addTiles() %>% 
-  addCircleMarkers(~x, ~y, radius = ~size,color = ~as.factor(category)) %>% 
-  addPopups(~x[2], ~y[2], "Random popup")
-m  # a map with the default OSM tile layer
-```
 
-
-```{r}
-data %>% 
-  ggplot(aes(x=x,y=y,col=category))+
-  geom_point()
-```
 
 # Conclusions
 
@@ -120,6 +93,6 @@ Clear summary adequately describing the results and putting them in context. Dis
 # References
 
 https://www.thepettyarchives.com/archives/miscellany/performances/setlists
-https://www.rdocumentation.org/packages/spotifyr/versions/2.2.1
+https://www.rdocumentation.org/packages/spotifyr/versions/2.2.1 
 https://github.com/thomasp85/ggraph
 
