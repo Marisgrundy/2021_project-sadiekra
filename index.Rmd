@@ -86,11 +86,12 @@ view(petty_albums)
 
 #Where Did They Tour?
 
-```{r}
+
 #geocode locations
 touring_geocode <- touring_data %>%
   geocode(City, method = 'osm', lat = latitude , long = longitude)
-```
+view(touring_geocode)
+
 
 # Results
 

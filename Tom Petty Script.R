@@ -42,5 +42,6 @@ View(petty_albums)
 #geocode locations
 touring_geocode <- touring_data %>%
   geocode(City, method = 'osm', lat = latitude , long = longitude)
+view(touring_geocode)
 
 
