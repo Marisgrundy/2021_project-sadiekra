@@ -1,14 +1,20 @@
 ---
-title: "My Final Project Template"
+title: "Visualizing the Music of Tom Petty and the Heartbreakers Using R"
 author: Sadie Kratt
-subtitle: Testing to see if it publishes
+subtitle: GEO 511
 ---
 
 # Introduction
 
-[~ 200 words]
+Tom Petty is one of the greatest rock and roll artists of the 20th century. He tragically died in 2017 right after he finished up his final tour. Because he is my favorite artist, I have decided to honor him by creating a data visualization of his work through R packages.
 
-Clearly stated background and questions / hypotheses / problems being addressed. Sets up the analysis in an interesting and compelling way.
+Problems to be addressed:
+* How many studio albums did he release and when?
+* What is the danceability of his songs?
+* How positive are his songs?
+* What are the top 10 hits of his career?
+* Where has the band toured?
+* What are the top 5 places they have toured?
 
 # Materials and methods
 
@@ -35,15 +41,26 @@ You can do numbers like this:
 See [http://rmarkdown.rstudio.com/](http://rmarkdown.rstudio.com/) for all the amazing things you can do.
 
 
-Here's my first code chunk.
+Loading the Spotify API
 ```{r}
-1+2
+#Load Spotify package and get access
+library(spotifyr)
+Sys.setenv(SPOTIFY_CLIENT_ID = '097f7729a69e451da9624441ccdb54bd')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'd1b68552cb2843929b58db9b964f87e9')
+
+access_token <- get_spotify_access_token()
 ```
 
-Load any required packages in a code chunk (you may need to install some packages):
+Load Required Packages
 
 ```{r, message=F, warning=F}
 library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(purrr)
+library (ggmap)
 library(leaflet)
 library(kableExtra)
 knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
@@ -102,4 +119,7 @@ Clear summary adequately describing the results and putting them in context. Dis
 
 # References
 
-All sources are cited in a consistent manner
+https://www.thepettyarchives.com/archives/miscellany/performances/setlists
+https://www.rdocumentation.org/packages/spotifyr/versions/2.2.1
+https://github.com/thomasp85/ggraph
+
