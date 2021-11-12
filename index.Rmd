@@ -35,13 +35,12 @@ Sys.setenv(SPOTIFY_CLIENT_SECRET = 'd1b68552cb2843929b58db9b964f87e9')
 access_token <- get_spotify_access_token()
 ```
 
-Load Required Packages
+### Load Required Packages
 
 ```{r, message=F, warning=F}
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-library(dplyr)
 library(knitr)
 library(purrr)
 library (tidygeocoder)
@@ -79,19 +78,21 @@ view(petty_albums)
 ```{r, results='asis'}
 
 ```
-#Band Specifics
+## Band Specifics
 ```{r}
 
 ```
 
-#Where Did They Tour?
+## Where Did They Tour?
+### Geocode locations
+```{r, eval=FALSE}
+touring_geo <- touring_data %>% geocode (City, method = 'osm', lat = latitude , long = longitude)%>% 
+  write_csv(file="data/touring_geo.csv")
+```
 
-
-#geocode locations
-
-touring_geocode <- touring_data %>%
-  geocode(City, method = 'osm', lat = latitude , long = longitude)
-view(touring_geocode)
+```{r}
+touring_geo=read_csv("data/touring_geo.csv")
+```
 
 
 # Results

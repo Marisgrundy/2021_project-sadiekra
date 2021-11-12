@@ -9,7 +9,6 @@ access_token <- get_spotify_access_token()
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
-library(dplyr)
 library(knitr)
 library(purrr)
 library (tidygeocoder)
@@ -39,9 +38,12 @@ petty_albums <- get_artist_albums(
 )
 View(petty_albums)
 
-#geocode locations
-touring_geocode <- touring_data %>%
-  geocode(City, method = 'osm', lat = latitude , long = longitude)
-view(touring_geocode)
+#geocode locations and save as its own csv
 
+touring_geo <- touring_data %>% geocode (City, method = 'osm', lat = latitude , long = longitude)%>% 
+  write_csv(file="data/touring_geo.csv")
+view(touring_geo)
+
+#read in geocoded csv
+touring_geo=read_csv("data/touring_geo.csv")
 
