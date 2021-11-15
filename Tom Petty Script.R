@@ -47,3 +47,21 @@ view(touring_geo)
 #read in geocoded csv
 touring_geo=read_csv("data/touring_geo.csv")
 
+#Map the locations with leaflet
+map_tour <- leaflet(touring_geo) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addCircleMarkers(radius = 1, popup = touring_geo$City,
+                   color = "#7625be")
+map_tour
+
+#Find the top 5 most visited cities
+top_5<-touring_geo%>%
+  filter(City != "NA")%>%
+  count(City)%>%
+  arrange(desc(n))
+top_5
+
+kable(top_5, caption = "Top 5 Touring Locations") %>%
+  kable_styling(latex_options = "striped")%>%
+  row_spec(1:5, background = "#Cab5dc")%>%
+  scroll_box(width = "600px", height="350px")

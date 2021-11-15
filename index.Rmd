@@ -84,6 +84,7 @@ view(petty_albums)
 ```
 
 ## Where Did They Tour?
+
 ### Geocode locations
 ```{r, eval=FALSE}
 touring_geo <- touring_data %>% geocode (City, method = 'osm', lat = latitude , long = longitude)%>% 
@@ -93,7 +94,30 @@ touring_geo <- touring_data %>% geocode (City, method = 'osm', lat = latitude , 
 ```{r}
 touring_geo=read_csv("data/touring_geo.csv")
 ```
+### Mapping Locations with Leaflet
+```{r}
+map_tour <- leaflet(touring_geo) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addCircleMarkers(radius = 1, popup = touring_geo$City,
+                   color = "#7625be")
+map_tour
+```
 
+## Where are the top 5 locations visited while touring?
+```{r}
+top_5<-touring_geo%>%
+  filter(City != "NA")%>%
+  count(City)%>%
+  arrange(desc(n))
+top_5
+```
+
+```{r}
+kable(top_5, caption = "Top 5 Touring Locations") %>%
+  kable_styling(latex_options = "striped")%>%
+  row_spec(1:5, background = "#Cab5dc")%>%
+  scroll_box(width = "600px", height="350px")
+```
 
 # Results
 
