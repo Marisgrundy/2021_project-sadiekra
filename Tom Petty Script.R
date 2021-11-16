@@ -65,3 +65,17 @@ kable(top_5, caption = "Top 5 Touring Locations") %>%
   kable_styling(latex_options = "striped")%>%
   row_spec(1:5, background = "#Cab5dc")%>%
   scroll_box(width = "600px", height="350px")
+
+#Number of studio albums and when
+album_filter <- petty_albums%>%
+  filter(name!= c("Mojo Tour Edition", "Hard Promises (Reissue Remastered)", 
+                  "Damn The Torpedoes (Remastered)", 
+                   "Damn The Torpedoes (Deluxe Edition)"))%>%
+  arrange(desc(release_date))%>%
+  select(name, release_date)
+
+kable(album_filter, caption = "Studio Albums")%>%
+kable_styling(latex_options = "striped")%>%
+  scroll_box(width = "600px", height="350px")
+number_albums <- count(album_filter)
+number_albums
