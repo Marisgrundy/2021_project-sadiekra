@@ -96,6 +96,29 @@ number_albums
 ```
 ### Danceability
 ### Valence
+```{r}
+#Positivity of songs
+petty_valence <- tom_petty%>%
+  arrange(-valence) %>% 
+  select(.data$track_name, .data$valence) %>%
+  distinct()%>%
+  head(10)
+petty_valence
+
+valence_plot <- ggplot(petty_valence, aes(x = reorder(track_name, -valence), 
+                                          valence)) +
+  geom_point(color="#7625be") +
+  theme(axis.text.x = element_text(color="grey30", 
+                                       size=8, angle=40),
+            axis.text.y = element_text(face="bold", color="grey30", 
+                                       size=10,),
+        axis.title = element_text(color = "#7625be", face = "bold")) +
+  ggtitle("Top 10 Positive Songs") +
+  xlab("Track Name") +
+  ylab("Valence")
+valence_plot
+```
+
 ### Top 10 Hits
 ### Most Used Lyrics
 ## Where Did They Tour?
@@ -133,15 +156,6 @@ kable(top_5, caption = "Top 5 Touring Locations") %>%
   row_spec(1:5, background = "#Cab5dc")%>%
   scroll_box(width = "600px", height="350px")
 ```
-
-# Results
-
-[~200 words]
-
-Tables and figures (maps and other graphics) are carefully planned to convey the results of your analysis. Intense exploration and evidence of many trials and failures. The author looked at the data in many different ways before coming to the final presentation of the data.
-
-Show tables, plots, etc. and describe them.
-
 
 
 # Conclusions

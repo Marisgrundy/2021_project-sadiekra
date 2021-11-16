@@ -79,3 +79,24 @@ kable_styling(latex_options = "striped")%>%
   scroll_box(width = "600px", height="350px")
 number_albums <- count(album_filter)
 number_albums
+
+#Positivity of songs
+petty_valence <- tom_petty%>%
+  arrange(-valence) %>% 
+  select(.data$track_name, .data$valence) %>%
+  distinct()%>%
+  head(10)
+petty_valence
+
+valence_plot <- ggplot(petty_valence, aes(x = reorder(track_name, -valence), 
+                                          valence)) +
+  geom_point(color="#7625be") +
+  theme(axis.text.x = element_text(color="grey30", 
+                                       size=8, angle=40),
+            axis.text.y = element_text(face="bold", color="grey30", 
+                                       size=10,),
+        axis.title = element_text(color = "#7625be", face = "bold")) +
+  ggtitle("Top 10 Positive Songs") +
+  xlab("Track Name") +
+  ylab("Valence")
+valence_plot
