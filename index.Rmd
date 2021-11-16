@@ -94,7 +94,24 @@ kable_styling(latex_options = "striped")%>%
 number_albums <- count(album_filter)
 number_albums
 ```
+
 ### Danceability
+```{r}
+petty_filter <-tom_petty%>%
+  select(album_name, danceability)
+
+album_dance <- ggplot(petty_filter, aes(x=danceability, fill=album_name,
+                      text = paste(album_name))) +
+  geom_density(alpha=0.7, color=NA) +
+  ggtitle("Danceability by Album") +
+  labs(x="Danceability", y="Density") +
+  guides(fill=guide_legend(title="Album Name")) +
+  theme_minimal() +
+    theme(legend.position="none") +
+    facet_wrap(~ album_name)
+album_dance
+```
+
 ### Valence
 ```{r}
 #Positivity of songs

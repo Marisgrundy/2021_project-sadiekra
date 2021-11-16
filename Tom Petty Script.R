@@ -14,8 +14,7 @@ library(purrr)
 library (tidygeocoder)
 library(leaflet)
 library(kableExtra)
-library(igraph)
-library(ggraph)
+library(plotly)
 
 #load touring data
 touring_data <-read.csv('data/locations.csv')
@@ -100,3 +99,23 @@ valence_plot <- ggplot(petty_valence, aes(x = reorder(track_name, -valence),
   xlab("Track Name") +
   ylab("Valence")
 valence_plot
+
+#Danceability Plot
+petty_filter <-tom_petty%>%
+  select(album_name, danceability)
+
+album_dance <- ggplot(petty_filter, aes(x=danceability, fill=album_name,
+                      text = paste(album_name))) +
+  geom_density(alpha=0.7, color=NA) +
+  ggtitle("Danceability by Album") +
+  labs(x="Danceability", y="Density") +
+  guides(fill=guide_legend(title="Album Name")) +
+  theme_minimal() +
+    theme(legend.position="none") +
+    facet_wrap(~ album_name)
+album_dance
+
+
+
+
+
