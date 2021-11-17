@@ -88,7 +88,7 @@ petty_valence <- tom_petty%>%
 petty_valence
 
 valence_plot <- ggplot(petty_valence, aes(x = reorder(track_name, -valence), 
-                                          valence)) +
+                                          valence,  text = paste(valence))) +
   geom_point(color="#7625be") +
   theme(axis.text.x = element_text(color="grey30", 
                                        size=8, angle=40),
@@ -98,21 +98,26 @@ valence_plot <- ggplot(petty_valence, aes(x = reorder(track_name, -valence),
   ggtitle("Top 10 Positive Songs") +
   xlab("Track Name") +
   ylab("Valence")
-valence_plot
+ggplotly(valence_plot, tooltip=c("text"))
 
 #Danceability Plot
-petty_filter <-tom_petty%>%
-  select(album_name, danceability)
+var_width = 20
 
-album_dance <- ggplot(petty_filter, aes(x=danceability, fill=album_name,
+petty_filter <-tom_petty%>%
+  select(album_name, danceability)%>%
+  dplyr::mutate(album_wrap=str_wrap(album_name, width = var_width))
+
+
+album_dance <- ggplot(petty_filter, aes(x=danceability, fill=album_wrap,
                       text = paste(album_name))) +
   geom_density(alpha=0.7, color=NA) +
   ggtitle("Danceability by Album") +
   labs(x="Danceability", y="Density") +
   guides(fill=guide_legend(title="Album Name")) +
   theme_minimal() +
-    theme(legend.position="none") +
-    facet_wrap(~ album_name)
+    theme(legend.position="none",
+          strip.text.x = element_text(size = 8)) +
+    facet_wrap(~ album_wrap)
 album_dance
 
 
