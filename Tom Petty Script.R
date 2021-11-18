@@ -1,7 +1,10 @@
 #Load Spotify package and get access
 library(spotifyr)
-Sys.setenv(SPOTIFY_CLIENT_ID = '097f7729a69e451da9624441ccdb54bd')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = 'd1b68552cb2843929b58db9b964f87e9')
+
+id = '097f7729a69e451da9624441ccdb54bd'
+secret = 'd1b68552cb2843929b58db9b964f87e9'
+Sys.setenv(SPOTIFY_CLIENT_ID = id)
+Sys.setenv(SPOTIFY_CLIENT_SECRET = secret)
 
 access_token <- get_spotify_access_token()
 
