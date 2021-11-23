@@ -74,7 +74,7 @@ petty_albums <- get_artist_albums(
   authorization = get_spotify_access_token(),
   include_meta_info = FALSE
 )
-view(petty_albums)
+petty_albums
 ```
 
 ```{r, results='asis'}
