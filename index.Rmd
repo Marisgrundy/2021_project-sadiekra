@@ -62,7 +62,6 @@ view(touring_data)
 #load spotify music data
 #Find artist id to access artist information
 tom_petty <- get_artist_audio_features("Tom Petty and the Heartbreakers")
-View(tom_petty)
 
 #Load album dataset
 petty_albums <- get_artist_albums(
