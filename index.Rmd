@@ -9,7 +9,7 @@ output:
 
 # Introduction
 
-Tom Petty is one of the greatest rock and roll artists of the 20th century. He tragically died in 2017 right after he finished up his final tour. Because he is my favorite artist, I have decided to honor him by creating a data visualization of his work through R packages. Music and the information that comes with it is more accessible now than it ever has been. The medium for listening has changed over time from live to recorded, record to tape, and cd to iPod. Streaming services have now taken the lead allowing users to pay a consistent amount of money for access to as much or as little music as they'd like at any time. Spotify has emerged as the leading streaming service with 172 million premium users as of mid 2021. Although we have moved away from hard copies, streaming allows artist data to be available and analyzed. Tom Petty and the Heartbreakers may not tour anymore, but their music can continue to present itself through listening, and now visualization.
+Tom Petty is one of the greatest rock and roll artists of the 20th century (citation? LOL). He tragically died in 2017 right after he finished up his final tour. Because Tom Petty is my favorite artist, I have decided to honor him by creating a data visualization of his work through R packages. Music and the information that comes with it is more accessible now than it ever has been. The medium for listening has changed over time from live to recorded, record to tape, and cd to iPod. Streaming services have now taken the lead, allowing users to pay a set amount of money for access to as much or as little music as they'd like at any time. Spotify has emerged as the leading streaming service with 172 million premium users as of mid 2021 (citation). Although we have moved away from hard copies, streaming allows artist data to be available and analyzed. Tom Petty and the Heartbreakers may not tour anymore, but their music can continue to present itself through listening, and now visualization.
 
 Questions to be addressed:
 * How many studio albums did they release and when?
@@ -94,6 +94,7 @@ kable_styling(latex_options = "striped")%>%
 number_albums <- count(album_filter)
 number_albums
 ```
+#Sadie- how come you filtered those albums above?  Also, maybe make the output more visible than just the readout from running it?- maris
 
 ### Danceability
 ```{r}
@@ -143,6 +144,7 @@ ggplotly(valence_plot, tooltip=c("text"))
 
 ### Top 10 Hits
 ### Most Used Lyrics
+#Sadie- do you mean like used by other people (covers) or used in general?  Maybe outline when you do this section?
 ## Where Did They Tour?
 
 ### Geocode locations
@@ -162,6 +164,7 @@ map_tour <- leaflet(touring_geo) %>%
                    color = "#7625be")
 map_tour
 ```
+#Sadie- maybe add a legend to tell what the circle marker colors mean using addLegend()- you can check out directions here: https://rstudio.github.io/leaflet/legends.html
 
 ## Where are the top 5 locations visited while touring?
 ```{r}
